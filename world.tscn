@@ -1,4 +1,65 @@
-[gd_scene format=3 uid="uid://dhmkegqfh03no"]
+[gd_scene load_steps=11 format=3 uid="uid://dhmkegqfh03no"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_mj82h"]
+[ext_resource type="Texture2D" uid="uid://k81b3fvns6fx" path="res://grids/Dark/texture_07.png" id="2_e4g6k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jrkn2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p0y3l"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_u4tie"]
+sky_material = SubResource("ProceduralSkyMaterial_p0y3l")
+
+[sub_resource type="Environment" id="Environment_vjoxx"]
+background_mode = 2
+sky = SubResource("Sky_u4tie")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48wal"]
+albedo_texture = ExtResource("2_e4g6k")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_bp8b0"]
+material = SubResource("StandardMaterial3D_48wal")
+size = Vector3(25, 1, 25)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mcg1t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffdq4"]
 
 [node name="world" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333116, 0, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42615, 0)
+script = ExtResource("1_mj82h")
+
+[node name="cap" type="CollisionShape3D" parent="player"]
+shape = SubResource("CapsuleShape3D_jrkn2")
+
+[node name="camera" type="Camera3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475425, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vjoxx")
+
+[node name="stage" type="Node3D" parent="."]
+
+[node name="main stage" type="MeshInstance3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_bp8b0")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="stage/main stage"]
+physics_material_override = SubResource("PhysicsMaterial_mcg1t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stage/main stage/StaticBody3D"]
+transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
+shape = SubResource("BoxShape3D_ffdq4")
