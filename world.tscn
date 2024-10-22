@@ -66,6 +66,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.131889)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 2.51007e-16, 11.1957)
 
 [node name="entity_0_geometry" type="MeshInstance3D" parent="Node/TBLoader/Default Layer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.495844, -0.725054, -0.0382042)
 mesh = SubResource("ArrayMesh_ao3i5")
 
 [node name="entity_0_geometry_col" type="StaticBody3D" parent="Node/TBLoader/Default Layer"]
